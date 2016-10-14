@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/Proto-level1.unity
+- path: Assets/new_controller_test_scene.unity
   isLoaded: 1
   isActive: 1
