@@ -5,11 +5,15 @@ public class player_controller : MonoBehaviour {
 
     public int runVelocity = 10;
     public int jumpVelocity = 20;
-    public float gravity = 1.0f;
+    public float airDampTime = 5f;
+    public float groundDampTime = 20f;
+    public float gravity = 20.0f;
+    
 
     private bool can_attack = true;
     private Vector2 velocity;
     private Controller controller;
+    private float currvelocity;
 
     public float attack_duration = .2f;
     public float attack_delay_time = .2f;
@@ -26,7 +30,7 @@ public class player_controller : MonoBehaviour {
     private int direction = 0;
 
     private float currjumps;
-    private bool grounded = false;
+    private bool isGrounded = false;
     // Use this for initialization
     void Start() {
         controller = GetComponent<Controller>();
@@ -41,12 +45,18 @@ public class player_controller : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        move();
+        attack();
+    }
 
-        if (controller.collision.ceiling || controller.collision.floor) {
+    void move()
+    {
+        if (controller.collision.ceiling || controller.collision.floor)
+        {
             velocity.y = 0;
             if (controller.collision.floor)
             {
-                grounded = true;
+                isGrounded = true;
                 currjumps = jumps;
             }
         }
@@ -55,30 +65,46 @@ public class player_controller : MonoBehaviour {
         {
             if (transform.localScale.x > 0)
                 transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
-            //velocity.x = runVelocity;
+
             direction = -1;
         }
         else if (Input.GetKey(KeyCode.D))
         {
             if (transform.localScale.x < 0)
                 transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
-            //velocity.x = runVelocity;
+
             direction = 1;
         }
         else {
-            velocity.x = 0;
+
             direction = 0;
         }
-        velocity.x = Mathf.Lerp(velocity.x, direction* runVelocity, 10f * Time.deltaTime);
 
-        if (Input.GetKeyDown(KeyCode.Space) && currjumps > 0) {
+        float DampTime;
+        if(isGrounded)
+        {
+            DampTime = groundDampTime;
+        }
+        else
+        {
+            DampTime = airDampTime;
+        }
+
+        //velocity.x = Mathf.SmoothDamp(velocity.x, direction * runVelocity, ref currvelocity, Time.deltaTime * DampTime);
+        velocity.x = Mathf.Lerp(velocity.x, direction * runVelocity,Time.deltaTime * DampTime);
+        if (Input.GetKeyDown(KeyCode.Space) && currjumps > 0)
+        {
+            if (isGrounded)
+            {
+                isGrounded = false;
+            }
             currjumps--;
             velocity.y = Mathf.Sqrt(2 * jumpVelocity * gravity);
         }
+
         velocity.y -= (gravity * Time.deltaTime);
         controller.move(velocity * Time.deltaTime);
 
-        attack();
     }
 
     void attack()
@@ -120,12 +146,17 @@ public class player_controller : MonoBehaviour {
         }
     }
 
+
     IEnumerator attack_delay()
     {
         yield return new WaitForSeconds(attack_delay_time);
         can_attack = true;
     }
 
+    public bool check_grounded()
+    {
+        return isGrounded;
+    }
     public void add_jump()
     {
         currjumps++;

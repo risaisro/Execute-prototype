@@ -408,6 +408,14 @@ Prefab:
       propertyPath: m_TagString
       value: Slowmo
       objectReference: {fileID: 0}
+    - target: {fileID: 11471418, guid: 4cfd78a9f38a2e64e8a7a9e052eb241e, type: 2}
+      propertyPath: Time_scale
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11471418, guid: 4cfd78a9f38a2e64e8a7a9e052eb241e, type: 2}
+      propertyPath: Slow_motion_time
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4cfd78a9f38a2e64e8a7a9e052eb241e, type: 2}
   m_IsPrefabParent: 0
@@ -428,7 +436,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   runVelocity: 8
   jumpVelocity: 3
-  gravity: 35
+  airDampTime: 5
+  groundDampTime: 20
+  gravity: 25
   attack_duration: 0.2
   attack_delay_time: 0.2
   jumps: 2

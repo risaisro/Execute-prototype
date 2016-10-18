@@ -21,7 +21,7 @@ public class Teleport_slash : MonoBehaviour {
     {
         if (can_slash)
         {
-            if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetMouseButtonDown(1))
+            if (Input.GetKeyDown(KeyCode.LeftShift))
             {
                 do_Teleport_slash();
                 StartCoroutine(Cooldown());

@@ -25,7 +25,7 @@ public class Reaction : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         transform.position = player_pos.position;
-        if (Input.GetKey (KeyCode.LeftShift))
+        if (Input.GetMouseButton(1))
         {
             Slowmo_held = true;
             Slowmo_curr += -Decrease_per_second * Time.deltaTime;
@@ -33,7 +33,7 @@ public class Reaction : MonoBehaviour {
             {
                 Slowmo_curr = 0;
                 Slowmo_held = false;
-                print("Slowmo is 0 br0seph");
+                print("Slowmo is empty");
             }
         }
         else Slowmo_held = false;
