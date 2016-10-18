@@ -8,7 +8,8 @@ public class Controller : MonoBehaviour {
     [Range(2, 10)]
     public int numHorizontalRays;
 
-    public LayerMask collisionMask;
+    public LayerMask Platforms;
+    public LayerMask Triggers;
 
     [Range(0.01f, 0.1f)]
     public float skinWidth;
@@ -42,7 +43,7 @@ public class Controller : MonoBehaviour {
         if (velocity.x != 0) {
             horizontalCollision(ref velocity);
         }
-        transform.Translate(velocity);
+        transform.Translate(velocity, Space.World);
     }
 
 
@@ -52,7 +53,7 @@ public class Controller : MonoBehaviour {
         Vector2 direction = new Vector2(Mathf.Sign(velocity.x), 0);
         float rayLength = Mathf.Abs(velocity.x) + skinWidth;
         for (int i = 0; i < numHorizontalRays; i++) {
-            RaycastHit2D hit = Physics2D.Raycast(origin + Vector2.up * (horizontalSpacing * i), direction, rayLength, collisionMask);
+            RaycastHit2D hit = Physics2D.Raycast(origin + Vector2.up * (horizontalSpacing * i), direction, rayLength, Platforms);
             //Debug.DrawRay(origin + Vector2.up * (horizontalSpacing * i), new Vector2(rayLength, 0));
             if (hit) {
                 velocity.x = (hit.distance - skinWidth) * direction.x;
@@ -67,7 +68,7 @@ public class Controller : MonoBehaviour {
         Vector2 direction = new Vector2(0, Mathf.Sign(velocity.y));
         float rayLength = Mathf.Abs(velocity.y) + skinWidth;
         for (int i = 0; i < numVerticalRays; i++) {
-            RaycastHit2D hit = Physics2D.Raycast(origin + Vector2.right * (verticalSpacing * i), direction, rayLength, collisionMask);
+            RaycastHit2D hit = Physics2D.Raycast(origin + Vector2.right * (verticalSpacing * i), direction, rayLength, Platforms);
             //Debug.DrawRay(origin + Vector2.right * (verticalSpacing * i), new Vector2(0, rayLength));
             if (hit) {
                 velocity.y = (hit.distance - skinWidth) * direction.y;

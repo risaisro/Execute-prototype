@@ -31,7 +31,7 @@ public class Teleport_slash : MonoBehaviour {
 
     void do_Teleport_slash()
     {
-        gameObject.GetComponent<Player_abilities>().jumps += 1;
+        gameObject.GetComponent<player_controller>().add_jump();
         float direction = 1;
         if(transform.localScale.x < 0)
         {
