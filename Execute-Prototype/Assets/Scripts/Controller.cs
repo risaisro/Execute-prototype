@@ -70,12 +70,17 @@ public class Controller : MonoBehaviour {
             RaycastHit2D hit = Physics2D.Raycast(origin + Vector2.right * (verticalSpacing * i), direction, rayLength, collisionMask);
             //Debug.DrawRay(origin + Vector2.right * (verticalSpacing * i), new Vector2(0, rayLength));
             if (hit) {
+                if (direction == Vector2.down) {
+                    collision.floor = true;
+                }
+                else {
+                    if (hit.collider.gameObject.layer == LayerMask.NameToLayer("OneWayPlatform"))
+                        return;
+                    else
+                        collision.ceiling = true;
+                }
                 velocity.y = (hit.distance - skinWidth) * direction.y;
                 rayLength = hit.distance;
-                if (direction == Vector2.down)
-                    collision.floor = true;
-                else
-                    collision.ceiling = true;
             }
         }
     }
