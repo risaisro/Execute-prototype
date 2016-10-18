@@ -5,6 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class Reaction : MonoBehaviour {
 
+    private bool Slowmo_held = false;
+    public float Slowmo_max = 5f;
+    public float Decrease_per_second = 1f;
+    public float Slowmo_curr;
+    public float increment = .25f;
 
     public float Time_scale = .1f;
     public float Slow_motion_time = .25f;
@@ -13,22 +18,52 @@ public class Reaction : MonoBehaviour {
     // Use this for initialization
     Transform player_pos;
     void Start () {
+        Slowmo_curr = Slowmo_max;
         player_pos = GameObject.FindGameObjectWithTag("Player").transform;
     }
 	
 	// Update is called once per frame
 	void Update () {
         transform.position = player_pos.position;
+        if (Input.GetKey (KeyCode.LeftShift))
+        {
+            Slowmo_held = true;
+            Slowmo_curr += -Decrease_per_second * Time.deltaTime;
+            if (Slowmo_curr < 0)
+            {
+                Slowmo_curr = 0;
+                Slowmo_held = false;
+                print("Slowmo is 0 br0seph");
+            }
+        }
+        else Slowmo_held = false;
+        if(!Slowmo_held && Slowmo_curr < Slowmo_max)
+        {
+            Slowmo_curr += Decrease_per_second * .5f * Time.deltaTime;
+            if (Slowmo_curr > Slowmo_max) Slowmo_curr = Slowmo_max;
+        }
     }
 
+    public void increment_bar()
+    {
+        if(Slowmo_curr < Slowmo_max)
+        {
+            Slowmo_curr += increment;
+            if (Slowmo_curr > Slowmo_max) Slowmo_curr = Slowmo_max;
+        }
+    }
+    
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Bullet"))
+        if (Slowmo_held)
         {
-
-            if (slowmo == false)
+            if (other.gameObject.CompareTag("Bullet"))
             {
-               StartCoroutine( SlowTime());
+
+                if (slowmo == false)
+                {
+                    StartCoroutine(SlowTime());
+                }
             }
         }
     }

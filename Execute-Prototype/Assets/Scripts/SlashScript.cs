@@ -6,6 +6,8 @@ public class SlashScript : MonoBehaviour {
     int t = 0;
 
     private Transform follow_point;
+    GameObject combo_bar;
+    GameObject slowmo;
 
     void Start()
     {
@@ -21,13 +23,18 @@ public class SlashScript : MonoBehaviour {
         if (other.gameObject.tag == "Bullet") {
             Destroy(other.gameObject);
             //print("Hit bullet");
+            slowmo = GameObject.FindGameObjectWithTag("Slowmo");
+            slowmo.GetComponent<Reaction>().increment_bar();
         }
-        if (other.gameObject.tag == "Enemy")
-        {
+        if (other.gameObject.tag == "Enemy") { 
+            combo_bar = GameObject.FindGameObjectWithTag("Combo Bar");
+            combo_bar.GetComponent<Bar_script>().Combo();
+
             Destroy(other.gameObject);
             //print("Hit enemy");
         }
     }
+    /*
     void OnTriggerExit2D(Collider2D other)
     {
         if (other.gameObject.tag == "Bullet")
@@ -53,10 +60,8 @@ public class SlashScript : MonoBehaviour {
             Destroy(other.gameObject);
             //print("Hit enemy");
         }
-    }
-
-
-    // Update is called once per frame
+    }*/
+    
     
     public void setLife(float life)
     {
@@ -64,7 +69,6 @@ public class SlashScript : MonoBehaviour {
     }
     public void Initialize(Transform fire_point)
     {
-        print("something");
         follow_point = fire_point;
     }
 }
