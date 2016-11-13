@@ -25,6 +25,11 @@ public class Bullet_script : MonoBehaviour {
         direction = _direction;
     }
 
+    public void SetRotation(Quaternion rotation)
+    {
+        transform.rotation = rotation;
+    }
+
 
     public void setLife(float _life)
     {

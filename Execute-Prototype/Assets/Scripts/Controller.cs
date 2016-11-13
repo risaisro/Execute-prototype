@@ -58,7 +58,9 @@ public class Controller : MonoBehaviour {
             if (hit) {
                 velocity.x = (hit.distance - skinWidth) * direction.x;
                 rayLength = hit.distance;
+                
             }
+            //RaycastHit2D trigger = Physics2D.Raycast(origin + Vector2.up * (horizontalSpacing * i), direction, rayLength, Triggers);
         }
     }
 

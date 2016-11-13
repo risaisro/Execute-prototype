@@ -21,7 +21,7 @@ public class Bullet1_pattern : MonoBehaviour {
     bool moving_downward;
     float average_velocity;
 
-    float lifespan = 20f;
+    public float lifespan = 20f;
 
     void Start () {
         Destroy(gameObject, lifespan);

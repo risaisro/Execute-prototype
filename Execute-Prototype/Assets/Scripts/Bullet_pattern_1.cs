@@ -3,13 +3,14 @@ using System.Collections;
 
 public class Bullet_pattern_1 : MonoBehaviour {
     public GameObject Bullet;
-    // Use this for initialization
+
     private Transform fire_point;
     private GameObject Player;
     private int Burst = 3;
-    public float AttackLag = 3f;
-    public float Between_shots = .3f;
-    public float Bullet_life = 3f;
+
+    public float AttackLag = 2f;
+    public float Between_shots = .1f;
+    //public float Bullet_life = 3f;
 
 
     private bool isAttacking = false;
